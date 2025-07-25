@@ -13,7 +13,7 @@
         gap: 1.5rem;
     }
     .dare-card {
-        background-color: var(--color-bg-tertiary);
+        background-color: var(--color-surface-light);
         border: 1px solid var(--color-border);
         border-radius: var(--radius-lg);
         padding: 1.5rem;
@@ -34,7 +34,7 @@
         padding-bottom: 1rem;
     }
     .dare-card-header .icon {
-        background-color: var(--color-bg-primary);
+        background-color: var(--color-background);
         color: var(--color-accent);
         border-radius: 50%;
         width: 40px;
@@ -68,23 +68,27 @@
         text-align: center;
         padding: 4rem 2rem;
         grid-column: 1 / -1;
-        background-color: var(--color-bg-tertiary);
-        border: 1px dashed var(--color-border);
+        background: linear-gradient(145deg, var(--color-surface), #1a2035);
+        border: 1px solid var(--color-brand);
         border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-glow);
     }
     .empty-state i {
-        font-size: 4rem;
-        color: var(--color-border);
-        margin-bottom: 1rem;
+        font-size: 5rem;
+        color: var(--color-brand);
+        margin-bottom: 1.5rem;
+        display: inline-block;
+        animation: float 3s ease-in-out infinite;
     }
     .empty-state h3 {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
     }
     .empty-state p {
         color: var(--color-text-secondary);
         font-size: 1.125rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
     }
 </style>
 
@@ -109,10 +113,10 @@
     </div>
     {% empty %}
     <div class="empty-state">
-        <i class="ph-light ph-ghost"></i>
-        <h3>It's quiet in here...</h3>
-        <p>No dares have been submitted yet. Be the first to add one!</p>
-        <a href="{% url 'dares:dare_create' %}" class="btn btn-primary">Submit a Dare</a>
+        <i class="ph-light ph-rocket-launch"></i>
+        <h3>The Void Awaits a Hero</h3>
+        <p>No dares have been submitted yet. Will you be the first to spark an adventure?</p>
+        <a href="{% url 'dares:dare_create' %}" class="btn btn-primary">Submit the First Dare</a>
     </div>
     {% endfor %}
 </div>

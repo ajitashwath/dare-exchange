@@ -1,168 +1,197 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
-<style>
-    .hero {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: calc(100vh - 80px); /* Full viewport height minus navbar */
-        text-align: center;
-        padding: var(--space-2xl) var(--space-lg);
-        overflow: hidden;
-    }
-
-    .hero-content {
-        position: relative;
-        z-index: 2;
-    }
-
-    .spark-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-xs);
-        padding: var(--space-xs) var(--space-md);
-        background: var(--color-brand-light);
-        border: 1px solid var(--color-brand);
-        color: var(--color-brand);
-        font-size: 0.9rem;
-        font-weight: 500;
-        border-radius: 999px;
-        margin-bottom: var(--space-lg);
-    }
-
-    .hero-title {
-        font-size: clamp(3rem, 7vw, 5.5rem);
-        font-weight: 800;
-        line-height: 1.1;
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .hero-title .highlight {
-        color: var(--color-brand);
-    }
-
-    .hero-subtitle {
-        font-size: 1.25rem;
-        color: var(--color-text-secondary);
-        max-width: 600px;
-        margin: var(--space-lg) auto var(--space-2xl);
-    }
-
-    .hero-actions {
-        display: flex;
-        justify-content: center;
-        gap: var(--space-md);
-    }
-
-    /* Floating Cards */
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-20px); }
-        100% { transform: translateY(0px); }
-    }
-
-    .floating-card {
-        position: absolute;
-        z-index: 1;
-        background: var(--color-surface);
-        padding: var(--space-md);
-        border-radius: var(--radius-lg);
-        border: 1px solid var(--color-border);
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-xs);
-        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-        animation: float 6s ease-in-out infinite;
-        width: 150px;
-    }
-
-    .floating-card .title {
-        font-weight: 600;
-    }
-    .floating-card .count {
-        color: var(--color-text-muted);
-        font-size: 0.9rem;
-    }
-    .floating-card i {
-        font-size: 1.5rem;
-        margin-bottom: var(--space-xs);
-        color: var(--color-accent);
-    }
-
-    .card-extreme { top: 15%; left: 10%; animation-delay: 0s; }
-    .card-social { top: 20%; right: 12%; animation-delay: -3s; }
-    .card-creative { bottom: 25%; left: 15%; animation-delay: -1.5s; }
-    .card-adventure { bottom: 20%; right: 10%; animation-delay: -4.5s; }
-
-    /* Decorative Elements */
-    .scroll-indicator, .vertical-text {
-        position: absolute;
-        color: var(--color-text-muted);
-        font-size: 0.8rem;
-        font-weight: 500;
-        letter-spacing: 1px;
-        z-index: 5;
-    }
-    .scroll-indicator { bottom: var(--space-xl); left: var(--space-xl); }
-    .vertical-text {
-        top: 50%;
-        right: calc(var(--space-lg) * -1);
-        transform: translateY(-50%) rotate(90deg);
-        transform-origin: bottom right;
-    }
-    
-    @media(max-width: 992px) {
-        .floating-card, .vertical-text, .scroll-indicator {
-            display: none;
+{% block main %}
+<main> {# No .container class for a full-width hero #}
+    {% block content %}
+    <style>
+        .hero {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Changed for full viewport height */
+            text-align: center;
+            padding: var(--space-2xl) var(--space-lg);
+            overflow: hidden;
+            background-color: var(--color-background);
         }
-    }
 
-</style>
+        /* Animated Gradient Blobs */
+        .hero::before, .hero::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background-image: radial-gradient(circle, rgba(79, 70, 229, 0.4), transparent 70%);
+            filter: blur(100px);
+            will-change: transform;
+            z-index: 0;
+        }
 
-<div class="hero">
-    <!-- Floating Cards -->
-    <div class="floating-card card-extreme">
-        <div class="title">Extreme</div>
-        <div class="count">20,845</div>
-    </div>
-    <div class="floating-card card-social">
-        <i class="ph ph-share-network"></i>
-        <div class="title">Social</div>
-        <div class="count">7,144</div>
-    </div>
-    <div class="floating-card card-creative">
-        <div class="title">Creative</div>
-        <div class="count">41,548</div>
-    </div>
-    <div class="floating-card card-adventure">
-        <div class="title">Adventure</div>
-        <div class="count">9,832</div>
-    </div>
+        .hero::before {
+            top: -20%;
+            left: -20%;
+            animation: blob-move-1 15s infinite alternate ease-in-out;
+        }
 
-    <!-- Decorative Text -->
-    <div class="scroll-indicator">02/03 - Scroll down</div>
-    <div class="vertical-text">Dareora Selections</div>
+        .hero::after {
+            bottom: -20%;
+            right: -20%;
+            background-image: radial-gradient(circle, rgba(236, 72, 153, 0.3), transparent 70%);
+            animation: blob-move-2 18s infinite alternate ease-in-out;
+            animation-delay: -5s;
+        }
+        
+        @keyframes blob-move-1 {
+        0% { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(100px, 50px) scale(1.2); }
+        }
+        @keyframes blob-move-2 {
+        0% { transform: translate(0, 0) scale(1.2); }
+        100% { transform: translate(-80px, -40px) scale(1); }
+        }
 
-    <!-- Hero Content -->
-    <div class="hero-content">
-        <div class="spark-badge">
-            <i class="ph ph-sparkle"></i>
-            <span>Unlock Your Dare Spark!</span>
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .spark-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-xs) var(--space-md);
+            background: var(--color-brand-light);
+            border: 1px solid var(--color-brand);
+            color: var(--color-brand);
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--color-text-primary);
+        }
+
+        .hero-title .highlight {
+            color: var(--color-brand);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: var(--space-lg) auto var(--space-2xl);
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+        }
+        .hero-actions .btn-primary {
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.5);
+        }
+
+        /* Floating Cards */
+        @keyframes float-complex {
+            0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) translateX(5px) rotate(-2deg); }
+            50% { transform: translateY(0px) translateX(-5px) rotate(2deg); }
+            75% { transform: translateY(10px) translateX(5px) rotate(-1deg); }
+            100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+        }
+        
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .floating-card {
+            position: absolute;
+            z-index: 1;
+            background: rgba(17, 24, 39, 0.5);
+            backdrop-filter: blur(10px);
+            padding: var(--space-md);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 160px;
+            animation: float-complex 8s ease-in-out infinite, fade-in-up 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .floating-card .title {
+            font-weight: 600;
+        }
+        .floating-card .count {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+        }
+        .floating-card i {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-xs);
+            color: var(--color-accent);
+        }
+
+        .card-extreme { top: 15%; left: 10%; animation-delay: -2s, 0.2s; }
+        .card-social { top: 20%; right: 12%; animation-delay: -6s, 0.4s; }
+        .card-creative { bottom: 25%; left: 15%; animation-delay: -4s, 0.6s; }
+        .card-adventure { bottom: 20%; right: 10%; animation-delay: -8s, 0.8s; }
+        
+        @media(max-width: 992px) {
+            .floating-card {
+                display: none;
+            }
+        }
+
+    </style>
+
+    <div class="hero">
+        <div class="floating-card card-extreme">
+            <div class="title">Extreme</div>
+            <div class="count">20,845</div>
         </div>
-        <h1 class="hero-title">
-            One-click for Challenge <span class="highlight">Connection</span>
-        </h1>
-        <p class="hero-subtitle">
-            Dive into the art of daring, where innovative social technology meets thrilling experiences.
-        </p>
-        <div class="hero-actions">
-            <a href="{% url 'dares:dare_list' %}" class="btn btn-outline">Browse Dares <i class="ph ph-arrow-right"></i></a>
-            <a href="{% url 'dares:dare_create' %}" class="btn btn-primary">Submit a Dare</a>
+        <div class="floating-card card-social">
+            <i class="ph ph-share-network"></i>
+            <div class="title">Social</div>
+            <div class="count">7,144</div>
+        </div>
+        <div class="floating-card card-creative">
+            <div class="title">Creative</div>
+            <div class="count">41,548</div>
+        </div>
+        <div class="floating-card card-adventure">
+            <div class="title">Adventure</div>
+            <div class="count">9,832</div>
+        </div>
+
+        <div class="hero-content">
+            <div class="spark-badge">
+                <i class="ph ph-sparkle"></i>
+                <span>Unlock Your Dare Spark!</span>
+            </div>
+            <h1 class="hero-title">
+                One-click for <span class="highlight">Challenge Connection</span>
+            </h1>
+            <p class="hero-subtitle">
+                Dive into the art of daring, where innovative social technology meets thrilling experiences.
+            </p>
+            <div class="hero-actions">
+                <a href="{% url 'dares:dare_list' %}" class="btn btn-outline">Browse Dares <i class="ph ph-arrow-right"></i></a>
+                <a href="{% url 'dares:dare_create' %}" class="btn btn-primary">Submit a Dare</a>
+            </div>
         </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
+</main>
+{% endblock main %}

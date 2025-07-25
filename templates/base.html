@@ -27,7 +27,10 @@
             --color-brand: #4F46E5; /* Indigo color for highlight */
             --color-brand-light: rgba(79, 70, 229, 0.1);
             --color-accent: #3B82F6; /* Blue for icons */
+            --color-danger: #F87171;
+            --color-success: #34D399;
 
+            --space-xs: 0.25rem;
             --space-sm: 0.5rem;
             --space-md: 1rem;
             --space-lg: 1.5rem;
@@ -120,13 +123,32 @@
             text-decoration: none;
             border: 1px solid var(--color-border);
         }
-        
-        /* --- Main Content & Containers --- */
-        main { padding-top: 80px; }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: var(--space-2xl) var(--space-lg);
+            padding: calc(var(--space-2xl) + 80px) var(--space-lg) var(--space-2xl); /* Added navbar height to top padding */
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 1px solid var(--color-border);
+        }
+        .page-header h2 { font-size: 2.5rem; font-weight: 800; }
+        .page-header p {
+            font-size: 1.125rem;
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: var(--space-sm) auto 0;
+        }
+        
+        .card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
         }
         
         /* --- Buttons --- */
@@ -146,16 +168,33 @@
         }
 
         .btn-primary {
-            background-color: var(--color-text-primary);
-            color: var(--color-background);
+            background-color: var(--color-brand);
+            color: var(--color-text-primary);
         }
         .btn-primary:hover {
-            background-color: var(--color-text-secondary);
+            background-color: #4338CA;
             transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--color-surface-light);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border);
+        }
+        .btn-secondary:hover {
+            border-color: var(--color-text-secondary);
+        }
+
+        .btn-danger {
+            background-color: var(--color-danger);
+            color: var(--color-text-primary);
+        }
+        .btn-danger:hover {
+             background-color: #ef4444;
         }
         
         .btn-outline {
-            background-color: rgba(31, 41, 55, 0.5);
+            background-color: transparent;
             color: var(--color-text-primary);
             border: 1px solid var(--color-border);
         }
@@ -170,7 +209,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: calc(80vh - 80px);
+            min-height: calc(90vh - 80px);
         }
         .auth-card {
             width: 100%;
@@ -206,7 +245,13 @@
             border-color: var(--color-brand);
             box-shadow: 0 0 0 3px var(--color-brand-light);
         }
+        .form-actions {
+            margin-top: var(--space-xl);
+            display: flex;
+            gap: var(--space-md);
+        }
         .form-actions button { width: 100%; }
+
         .form-footer-text {
             text-align: center;
             margin-top: var(--space-lg);
@@ -218,6 +263,38 @@
             font-weight: 500;
         }
         .form-footer-text a:hover { text-decoration: underline; }
+
+        .social-login-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--color-text-muted);
+            margin: var(--space-lg) 0;
+            font-size: 0.8rem;
+        }
+        .social-login-divider::before, .social-login-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .social-login-divider:not(:empty)::before { margin-right: .5em; }
+        .social-login-divider:not(:empty)::after { margin-left: .5em; }
+
+        .btn-social-login {
+            display: flex;
+            width: 100%;
+            background-color: var(--color-surface-light);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-primary);
+        }
+        .btn-social-login:hover {
+             background-color: var(--color-background);
+        }
+        .btn-social-login svg {
+            width: 20px;
+            height: 20px;
+        }
+
 
         /* --- Footer --- */
         .footer {
@@ -240,10 +317,12 @@
         }
         .social-links a {
             color: var(--color-text-muted);
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             transition: color 0.2s ease;
         }
-        .social-links a:hover { color: var(--color-text-primary); }
+        .social-links a:hover {
+            color: var(--color-text-primary);
+        }
 
         /* --- Responsive --- */
         @media (max-width: 992px) {
@@ -260,39 +339,42 @@
             
             <ul class="navbar-nav">
                 <li><a href="{% url 'dares:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
-                <li><a href="#">Dare App</a></li>
-                <li><a href="#">Challenges</a></li>
-                <li><a href="#">Features</a></li>
-                <li><a href="#">Community</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Network</a></li>
+                <li><a href="{% url 'dares:dare_list' %}" class="{% if request.resolver_match.url_name == 'dare_list' %}active{% endif %}">Dare App</a></li>
+                <li><a href="{% url 'dares:dare_list' %}" class="{% if request.resolver_match.url_name == 'challenges' %}active{% endif %}">Challenges</a></li>
+                <li><a href="{% url 'dares:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">Features</a></li>
+                <li><a href="{% url 'dares:dare_list' %}" class="{% if request.resolver_match.url_name == 'community' %}active{% endif %}">Community</a></li>
+                <li><a href="{% url 'dares:faq' %}" class="{% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a></li>
+                <li><a href="{% url 'dares:stats' %}" class="{% if request.resolver_match.url_name == 'stats' %}active{% endif %}">Network</a></li>
             </ul>
 
             <div class="navbar-actions">
                 {% if user.is_authenticated %}
                     <a href="#" class="user-profile-icon">{{ user.username|first|upper }}</a>
                 {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline">Login</a>
                     <a href="{% url 'signup' %}" class="btn btn-primary">Create Account</a>
                 {% endif %}
             </div>
         </div>
     </nav>
     
-    <main>
+    {% block main %}
+    <main class="container">
         {% block content %}
         {% endblock %}
     </main>
+    {% endblock main %}
     
     <footer class="footer">
         <div class="footer-container">
             <div class="social-links">
-                <a href="#">Instagram</a>
-                <a href="#">TikTok</a>
-                <a href="#">YouTube</a>
-                <a href="#">Discord</a>
-                <a href="#">Twitch</a>
-                <a href="#">Reddit</a>
-                <a href="#">Twitter</a>
+                <a href="#"><i class="ph-regular ph-instagram-logo"></i></a>
+                <a href="#"><i class="ph-regular ph-tiktok-logo"></i></a>
+                <a href="#"><i class="ph-regular ph-youtube-logo"></i></a>
+                <a href="#"><i class="ph-regular ph-discord-logo"></i></a>
+                <a href="#"><i class="ph-regular ph-twitch-logo"></i></a>
+                <a href="#"><i class="ph-regular ph-reddit-logo"></i></a>
+                <a href="#"><i class="ph-regular ph-twitter-logo"></i></a>
             </div>
             <p>&copy; {% now "Y" %} Dareora. All Rights Reserved.</p>
         </div>
