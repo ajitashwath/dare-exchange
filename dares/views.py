@@ -17,6 +17,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
+from django.contrib.auth.forms import UserCreationForm
+from django.views import generic
 import json
 import datetime
 from collections import defaultdict
@@ -511,3 +513,26 @@ class DareListView(ListView):
         )
         
         return context
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'signup.html'
+
+class StatsView(TemplateView):
+    template_name = 'stats.html'
+
+class AboutView(TemplateView):
+    template_name = 'about.html' 
+
+class ContactView(TemplateView):
+    template_name = 'contact.html' 
+
+class PrivacyView(TemplateView):
+    template_name = 'privacy.html'
+
+class TermsView(TemplateView):
+    template_name = 'terms.html'
+
+class FAQView(TemplateView):
+    template_name = 'faq.html'

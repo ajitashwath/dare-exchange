@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Dareora{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Welcome Back!</h2>
+            <p>Login to continue your daring adventures.</p>
+        </div>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+                <div style="color: #F87171; background-color: rgba(239, 68, 68, 0.1); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; text-align: center;">
+                    {{ form.non_field_errors.0 }}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Username</label>
+                {{ form.username }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Password</label>
+                {{ form.password }}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+
+            <p class="form-footer-text">
+                Don't have an account? <a href="{% url 'signup' %}">Sign Up</a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

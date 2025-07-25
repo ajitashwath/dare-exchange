@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Account - Dareora{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Join Dareora</h2>
+            <p>Create an account to start submitting and completing dares.</p>
+        </div>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 0.5rem;">{{ field.help_text|safe }}</p>
+                {% endif %}
+                {% if field.errors %}
+                    <div style="color: #F87171; font-size: 0.9rem; margin-top: 0.5rem;">{{ field.errors.0 }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Create Account</button>
+            </div>
+
+            <p class="form-footer-text">
+                Already have an account? <a href="{% url 'login' %}">Login</a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

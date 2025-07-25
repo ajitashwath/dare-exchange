@@ -17,11 +17,11 @@ class DareForm(forms.ModelForm):
                 'class': 'form-control',
             }),
             'name': forms.TextInput(attrs={
-                'placeholder': 'e.g., Priya Singh',
+                'placeholder': 'e.g., Kuch bhi',
                 'class': 'form-control',
             }),
             'email': forms.EmailInput(attrs={
-                'placeholder': 'e.g., priya@example.com',
+                'placeholder': 'e.g., bruh@example.com',
                 'class': 'form-control',
             }),
             'phone_number': forms.TextInput(attrs={
@@ -296,3 +296,9 @@ class BulkActionForm(forms.Form):
             'class': 'form-control',
         })
     )
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Name'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'your.email@example.com'}))
+    subject = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Subject'}))
+    message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Your message...'}))
