@@ -1,0 +1,8 @@
+Hi {{ user_name }},
+
+Thanks for submitting your dare, "{{ dare.title }}"!
+
+We've received it and it's now pending review by our team. You'll be notified once it's approved.
+
+Thanks,
+The Dareora Team

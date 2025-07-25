@@ -1,0 +1,10 @@
+A new dare has been submitted on Dareora.
+
+Title: {{ dare.title }}
+Submitted by: {{ dare.name }}
+College: {{ dare.college }}
+
+Dare Text:
+{{ dare.dare_text }}
+
+Review it here: {{ site_url }}admin/dares/dare/{{ dare.id }}/change/

@@ -13,9 +13,9 @@
         gap: 1.5rem;
     }
     .dare-card {
-        background-color: var(--surface-dark);
-        border: 1px solid var(--border-dark);
-        border-radius: 0.75rem;
+        background-color: var(--color-bg-tertiary);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
         padding: 1.5rem;
         display: flex;
         flex-direction: column;
@@ -30,12 +30,12 @@
         align-items: center;
         gap: 0.75rem;
         margin-bottom: 1rem;
-        border-bottom: 1px solid var(--border-dark);
+        border-bottom: 1px solid var(--color-border);
         padding-bottom: 1rem;
     }
     .dare-card-header .icon {
-        background-color: var(--bg-dark);
-        color: var(--accent-purple);
+        background-color: var(--color-bg-primary);
+        color: var(--color-accent);
         border-radius: 50%;
         width: 40px;
         height: 40px;
@@ -46,15 +46,15 @@
     .dare-card-header .info h3 {
         margin: 0;
         font-size: 1.125rem;
-        color: var(--text-primary);
+        color: var(--color-text-primary);
     }
     .dare-card-header .info p {
         margin: 0;
         font-size: 0.875rem;
-        color: var(--text-secondary);
+        color: var(--color-text-secondary);
     }
     .dare-card-body p {
-        color: var(--text-secondary);
+        color: var(--color-text-secondary);
         font-size: 1rem;
         line-height: 1.6;
         flex-grow: 1;
@@ -67,15 +67,24 @@
     .empty-state {
         text-align: center;
         padding: 4rem 2rem;
+        grid-column: 1 / -1;
+        background-color: var(--color-bg-tertiary);
+        border: 1px dashed var(--color-border);
+        border-radius: var(--radius-lg);
     }
     .empty-state i {
         font-size: 4rem;
-        color: var(--border-dark);
+        color: var(--color-border);
         margin-bottom: 1rem;
     }
+    .empty-state h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
     .empty-state p {
-        color: var(--text-secondary);
+        color: var(--color-text-secondary);
         font-size: 1.125rem;
+        margin-bottom: 1.5rem;
     }
 </style>
 
@@ -93,16 +102,17 @@
             <p>"{{ dare.dare_text|truncatewords:20 }}"</p>
         </div>
         <div class="dare-card-actions">
-            <a href="{% url 'dare_detail' dare.pk %}" class="btn btn-secondary" style="flex-grow: 1;"><i class="ph-bold ph-eye"></i> View</a>
-            <a href="{% url 'dare_edit' dare.pk %}" class="btn btn-secondary"><i class="ph-bold ph-pencil-simple"></i></a>
-            <a href="{% url 'dare_delete' dare.pk %}" class="btn btn-danger"><i class="ph-bold ph-trash"></i></a>
+            <a href="{% url 'dares:dare_detail' dare.slug %}" class="btn btn-secondary" style="flex-grow: 1;"><i class="ph-bold ph-eye"></i> View</a>
+            <a href="{% url 'dares:dare_edit' dare.slug %}" class="btn btn-secondary"><i class="ph-bold ph-pencil-simple"></i></a>
+            <a href="{% url 'dares:dare_delete' dare.slug %}" class="btn btn-danger"><i class="ph-bold ph-trash"></i></a>
         </div>
     </div>
     {% empty %}
-    <div class="card empty-state" style="grid-column: 1 / -1;">
+    <div class="empty-state">
         <i class="ph-light ph-ghost"></i>
         <h3>It's quiet in here...</h3>
         <p>No dares have been submitted yet. Be the first to add one!</p>
+        <a href="{% url 'dares:dare_create' %}" class="btn btn-primary">Submit a Dare</a>
     </div>
     {% endfor %}
 </div>

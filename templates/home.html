@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <div class="spark-badge">
+            <i class="ph-fill ph-sparkle"></i>
+            <span>Unlock Your Dare Spark!</span>
+        </div>
+        <h1 class="hero-title">
+            One-click for Challenge
+            <span class="highlight">
+                Connection
+                <i class="ph-fill ph-play-circle play-icon"></i>
+            </span>
+        </h1>
+        <p class="hero-subtitle">
+            Dive into the art of daring, where innovative social technology meets thrilling experiences
+        </p>
+        <div class="hero-actions">
+            <a href="{% url 'dares:dare_list' %}" class="btn btn-secondary">Browse Dares <i class="ph ph-arrow-right" style="margin-left: 8px;"></i></a>
+            <a href="{% url 'dares:dare_create' %}" class="btn btn-primary">Submit a Dare</a>
+        </div>
+    </div>
+
+    <div class="floating-card card-extreme">
+        <i class="ph ph-lightning-a-fill"></i>
+        <span class="title">Extreme</span>
+        <span class="count">20,845</span>
+    </div>
+    <div class="floating-card card-social">
+        <i class="ph ph-arrow-square-out"></i>
+        <span class="title">Social</span>
+        <span class="count">7,144</span>
+    </div>
+    <div class="floating-card card-creative">
+        <i class="ph ph-plus-circle-fill"></i>
+        <span class="title">Creative</span>
+        <span class="count">41,548</span>
+    </div>
+    <div class="floating-card card-adventure">
+        <i class="ph ph-lightning-a-fill"></i>
+        <span class="title">Adventure</span>
+        <span class="count">9,832</span>
+    </div>
+
+    <div class="scroll-indicator">02/03 - Scroll down</div>
+    <div class="vertical-text">Dareora Selections</div>
+
+</div>
+{% endblock %}

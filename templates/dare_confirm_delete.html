@@ -3,13 +3,13 @@
 {% block content %}
 <div style="max-width: 600px; margin: 2rem auto; text-align: center;">
     <div class="card">
-        <i class="ph-bold ph-warning" style="font-size: 3rem; color: var(--accent-red); margin-bottom: 1rem;"></i>
+        <i class="ph-bold ph-warning" style="font-size: 3rem; color: var(--color-danger); margin-bottom: 1rem;"></i>
         <h2>Delete Dare</h2>
         <p style="color: var(--text-secondary); font-size: 1.125rem;">Are you sure you want to permanently delete this dare?</p>
         
-        <div class="card" style="background-color: var(--bg-dark); text-align: left; margin: 2rem 0;">
+        <div class="card" style="background-color: var(--color-bg-primary); text-align: left; margin: 2rem 0;">
             <p><strong>{{ dare.name }}</strong> from <strong>{{ dare.college }}</strong></p>
-            <blockquote style="border-left: 2px solid var(--border-dark); padding-left: 1rem; margin: 0; font-size: 1rem; color: var(--text-secondary);">
+            <blockquote style="border-left: 2px solid var(--color-border); padding-left: 1rem; margin: 0; font-size: 1rem; color: var(--color-text-secondary);">
                 {{ dare.dare_text|truncatewords:30 }}
             </blockquote>
         </div>
@@ -20,7 +20,7 @@
             {% csrf_token %}
             <div class="form-actions" style="justify-content: center;">
                 <button type="submit" class="btn btn-danger"><i class="ph-bold ph-trash"></i> Yes, Delete it</button>
-                <a href="{% url 'dare_detail' dare.pk %}" class="btn btn-secondary">No, Go Back</a>
+                <a href="{% url 'dares:dare_detail' dare.slug %}" class="btn btn-secondary">No, Go Back</a>
             </div>
         </form>
     </div>

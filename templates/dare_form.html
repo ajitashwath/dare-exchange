@@ -2,42 +2,33 @@
 
 {% block content %}
 <div class="page-header">
-    {% if form.instance.pk %}
-        <h2>Edit Dare</h2>
-        <p>Make changes to the existing dare below.</p>
-    {% else %}
-        <h2>Create a New Dare</h2>
-        <p>Fill out the form to submit a new dare to the exchange.</p>
-    {% endif %}
+    <h2>{{ page_title|default:"Create Dare" }}</h2>
+    <p>{{ page_description|default:"Fill out the form to submit a new dare." }}</p>
 </div>
 
-<div class="card">
+<div class="card" style="max-width: 800px; margin: 0 auto;">
     <form method="post" novalidate>
         {% csrf_token %}
         
+        {% for field in form %}
         <div class="form-group">
-            {{ form.name.label_tag }}
-            {{ form.name }}
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.help_text %}
+            <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: var(--space-sm);">{{ field.help_text }}</p>
+            {% endif %}
+            {% for error in field.errors %}
+            <p style="color: var(--color-danger); font-size: 0.875rem; margin-top: var(--space-sm);">{{ error }}</p>
+            {% endfor %}
         </div>
-        <div class="form-group">
-            {{ form.phone_number.label_tag }}
-            {{ form.phone_number }}
-        </div>
-        <div class="form-group">
-            {{ form.college.label_tag }}
-            {{ form.college }}
-        </div>
-        <div class="form-group">
-            {{ form.dare_text.label_tag }}
-            {{ form.dare_text }}
-        </div>
+        {% endfor %}
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">
                 <i class="ph-bold ph-check"></i>
                 <span>{% if form.instance.pk %}Update Dare{% else %}Submit Dare{% endif %}</span>
             </button>
-            <a href="{% url 'dare_list' %}" class="btn btn-secondary">Cancel</a>
+            <a href="{% url 'dares:dare_list' %}" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
 </div>
