@@ -1,10 +1,92 @@
 {% extends 'base.html' %}
 {% block title %}FAQ - Dareora{% endblock %}
 {% block content %}
+<style>
+    .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .faq-item {
+        background-color: var(--color-surface-light);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--space-md);
+        overflow: hidden;
+    }
+    .faq-item summary {
+        font-size: 1.125rem;
+        font-weight: 600;
+        padding: var(--space-lg);
+        cursor: pointer;
+        outline: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .faq-item summary::-webkit-details-marker {
+        display: none;
+    }
+    .faq-item summary::after {
+        content: '+';
+        font-size: 1.5rem;
+        transition: transform 0.2s ease;
+    }
+    .faq-item[open] summary::after {
+        transform: rotate(45deg);
+    }
+    .faq-content {
+        padding: 0 var(--space-lg) var(--space-lg);
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+    }
+</style>
+
 <div class="page-header">
     <h2>Frequently Asked Questions</h2>
+    <p>Find answers to common questions about Dareora.</p>
 </div>
-<div class="card">
-    <p>Your FAQ content goes here.</p>
+
+<div class="faq-container">
+    <details class="faq-item">
+        <summary>What is Dareora?</summary>
+        <div class="faq-content">
+            <p>Dareora is a platform for college students to challenge each other with dares, complete them, and share their experiences. It's all about stepping out of your comfort zone and creating fun, memorable moments.</p>
+        </div>
+    </details>
+
+    <details class="faq-item">
+        <summary>How do I submit a dare?</summary>
+        <div class="faq-content">
+            <p>You can submit a dare by clicking the "Submit a Dare" button on the homepage or navigating to the "Dare App" and finding the create button. You'll need to fill out a form with details like the dare title, description, category, and difficulty.</p>
+        </div>
+    </details>
+    
+    <details class="faq-item">
+        <summary>Are there any rules for submitting dares?</summary>
+        <div class="faq-content">
+            <p>Yes. Dares cannot contain content related to hate, violence, illegal activities, or drugs. All submissions are reviewed, and dares that violate these rules will be rejected.</p>
+        </div>
+    </details>
+
+    <details class="faq-item">
+        <summary>How are dares approved?</summary>
+        <div class="faq-content">
+            <p>Our team reviews each submitted dare to ensure it's safe, fun, and follows our community guidelines. You will receive a notification once your dare is approved.</p>
+        </div>
+    </details>
+    
+    <details class="faq-item">
+        <summary>Is my personal information safe?</summary>
+        <div class="faq-content">
+            <p>Yes. Information like your phone number is used for verification purposes only and is not displayed publicly on the site.</p>
+        </div>
+    </details>
+
+    <details class="faq-item">
+        <summary>What are the dare categories?</summary>
+        <div class="faq-content">
+            <p>We have four main categories: Extreme, Creative, Social, and Adventure, each designed to cater to different kinds of dare-devil spirits.</p>
+        </div>
+    </details>
 </div>
 {% endblock %}

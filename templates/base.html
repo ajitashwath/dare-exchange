@@ -342,7 +342,7 @@
                 <li><a href="{% url 'dares:dare_list' %}" class="{% if request.resolver_match.url_name == 'dare_list' %}active{% endif %}">Dare App</a></li>
                 <li><a href="{% url 'dares:dare_list' %}" class="{% if request.resolver_match.url_name == 'challenges' %}active{% endif %}">Challenges</a></li>
                 <li><a href="{% url 'dares:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">Features</a></li>
-                <li><a href="{% url 'dares:dare_list' %}" class="{% if request.resolver_match.url_name == 'community' %}active{% endif %}">Community</a></li>
+                <li><a href="{% url 'dares:community' %}" class="{% if request.resolver_match.url_name == 'community' %}active{% endif %}">Community</a></li>
                 <li><a href="{% url 'dares:faq' %}" class="{% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a></li>
                 <li><a href="{% url 'dares:stats' %}" class="{% if request.resolver_match.url_name == 'stats' %}active{% endif %}">Network</a></li>
             </ul>

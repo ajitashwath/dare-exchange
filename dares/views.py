@@ -514,6 +514,20 @@ class DareListView(ListView):
         
         return context
 
+class CommunityView(ListView):
+    """
+    Display a board of recently completed and verified dares.
+    """
+    model = DareCompletion
+    template_name = 'community.html'
+    context_object_name = 'completions'
+    paginate_by = 9
+
+    def get_queryset(self):
+        return DareCompletion.objects.filter(is_verified=True).select_related(
+            'dare', 'dare__category'
+        ).order_by('-completed_at')
+
 class SignUpView(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('login')

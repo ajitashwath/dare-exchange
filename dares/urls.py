@@ -16,6 +16,8 @@ from .views import (
     NewsletterSubscribeView,
     APIStatsView,
     SearchSuggestionsView,
+    CommunityView,
+    ContactView
 )
 
 app_name = 'dares'
@@ -24,6 +26,7 @@ urlpatterns = [
     # Main pages
     path('', HomeView.as_view(), name='home'),
     path('dares/', DareListView.as_view(), name='dare_list'),
+    path('community/', CommunityView.as_view(), name='community'),
     path('about/', AboutView.as_view(), name='about'),
     path('contact/', ContactView.as_view(), name='contact'),
     path('stats/', StatsView.as_view(), name='stats'),

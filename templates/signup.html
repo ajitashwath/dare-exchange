@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load socialaccount %} {# Add this line #}
 
 {% block title %}Create Account - Dareora{% endblock %}
 
@@ -9,6 +10,13 @@
             <h2>Join Dareora</h2>
             <p>Create an account to start submitting and completing dares.</p>
         </div>
+        
+        <a href="{% provider_login_url 'google' %}" class="btn btn-social-login"> {# Updated Google Button #}
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.19,4.73C14.03,4.73 15.1,5.5 15.7,6.14L17.87,4.12C16.14,2.56 14.18,1.57 12.19,1.57C7.03,1.57 3,6.15 3,12C3,17.85 7.03,22.43 12.19,22.43C17.6,22.43 21.54,18.51 21.54,12.31C21.54,11.77 21.45,11.43 21.35,11.1Z"/></svg>
+            <span>Sign Up with Google</span>
+        </a>
+
+        <div class="social-login-divider"><span>OR</span></div>
 
         <form method="post" novalidate>
             {% csrf_token %}
@@ -20,27 +28,20 @@
                 {% if field.help_text %}
                     <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 0.5rem;">{{ field.help_text|safe }}</p>
                 {% endif %}
-                {% if field.errors %}
-                    <div style="color: var(--color-danger); font-size: 0.9rem; margin-top: 0.5rem;">{{ field.errors.0 }}</div>
-                {% endif %}
+                {% for error in field.errors %}
+                    <div style="color: var(--color-danger); font-size: 0.9rem; margin-top: 0.5rem;">{{ error }}</div>
+                {% endfor %}
             </div>
             {% endfor %}
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Create Account</button>
             </div>
-
-            <div class="social-login-divider"><span>OR</span></div>
-            
-            <a href="#" class="btn btn-social-login">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.19,4.73C14.03,4.73 15.1,5.5 15.7,6.14L17.87,4.12C16.14,2.56 14.18,1.57 12.19,1.57C7.03,1.57 3,6.15 3,12C3,17.85 7.03,22.43 12.19,22.43C17.6,22.43 21.54,18.51 21.54,12.31C21.54,11.77 21.45,11.43 21.35,11.1Z"/></svg>
-                <span>Sign Up with Google</span>
-            </a>
-
-            <p class="form-footer-text">
-                Already have an account? <a href="{% url 'login' %}">Login</a>
-            </p>
         </form>
+
+        <p class="form-footer-text">
+            Already have an account? <a href="{% url 'login' %}">Login</a>
+        </p>
     </div>
 </div>
 {% endblock %}

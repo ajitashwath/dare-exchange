@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .models import Dare, Category, DifficultyLevel, DareCompletion, DareLike
 
 class DareForm(forms.ModelForm):
@@ -296,3 +297,27 @@ class BulkActionForm(forms.Form):
             'class': 'form-control',
         })
     )
+
+class CustomLoginForm(AuthenticationForm):
+    """
+    Custom login form to apply CSS classes to widgets.
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Enter your username'}
+        )
+        self.fields['password'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Enter your password'}
+        )
+
+class CustomUserCreationForm(UserCreationForm):
+    """
+    Custom sign-up form to apply CSS classes to widgets.
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for fieldname in self.fields:
+            self.fields[fieldname].widget.attrs.update({
+                'class': 'form-control'
+            })
