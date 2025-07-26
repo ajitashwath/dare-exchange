@@ -532,16 +532,7 @@ class SignUpView(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'signup.html'
-
-class StatsView(TemplateView):
-    template_name = 'stats.html'
-
-class AboutView(TemplateView):
-    template_name = 'about.html' 
-
-class ContactView(TemplateView):
-    template_name = 'contact.html' 
-
+    
 class PrivacyView(TemplateView):
     template_name = 'privacy.html'
 

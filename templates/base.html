@@ -295,6 +295,53 @@
             height: 20px;
         }
 
+        .messages-container {
+            position: fixed;
+            top: 100px; /* Below the navbar */
+            right: var(--space-lg);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            max-width: 350px;
+        }
+        .alert {
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-md);
+            color: var(--color-text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-md);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: fadeInRight 0.5s ease;
+        }
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .alert-success { background-color: var(--color-success); }
+        .alert-info { background-color: var(--color-accent); }
+        .alert-warning { background-color: #F59E0B; }
+        .alert-error, .alert-danger { background-color: var(--color-danger); } /* Django uses danger tag for errors */
+
+        .close-alert {
+            background: none;
+            border: none;
+            color: inherit;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0.7;
+            padding: 0 0 0 1rem;
+        }
+        .close-alert:hover { opacity: 1; }
 
         /* --- Footer --- */
         .footer {
@@ -349,7 +396,13 @@
 
             <div class="navbar-actions">
                 {% if user.is_authenticated %}
-                    <a href="#" class="user-profile-icon">{{ user.username|first|upper }}</a>
+                    <a href="#" class="user-profile-icon" title="Logged in as {{ user.username }}">{{ user.username|first|upper }}</a>
+                    
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-secondary">Logout</button>
+                    </form>
+                    
                 {% else %}
                     <a href="{% url 'login' %}" class="btn btn-outline">Login</a>
                     <a href="{% url 'signup' %}" class="btn btn-primary">Create Account</a>
