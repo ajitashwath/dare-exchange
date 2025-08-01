@@ -19,6 +19,8 @@ from django.views.decorators.cache import cache_page
 from django.core.cache import cache
 from django.contrib.auth.forms import UserCreationForm
 from django.views import generic
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 import json
 import datetime
 import google.generativeai as genai
@@ -544,18 +546,53 @@ class TermsView(TemplateView):
 class FAQView(TemplateView):
     template_name = 'faq.html'
 
+
+@csrf_exempt    
+@require_POST 
 def chatbot_response(request):
-    if request.method == 'POST':
-        GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
-        genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel('gemini-pro')
+    try:
         data = json.loads(request.body)
         user_message = data.get('message', '')
+        if not user_message.strip():
+            return JsonResponse({'response': 'Please type a message to chat.'}, status=400)
+    except json.JSONDecodeError:
+        return JsonResponse({'response': 'There was an issue with the request format.'}, status=400)
+    GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+    if not GEMINI_API_KEY:
+        error_message = "Sorry, the chatbot is currently offline. (API key not configured)."
+        return JsonResponse({'response': error_message}, status=503)
 
-        try:
-            response = model.generate_content(user_message)
-            return JsonResponse({'response': response.text})
-        except Exception as e:
-            return JsonResponse({'response': f'An error occurred: {e}'})
-            
-    return JsonResponse({'response': 'Invalid request'}, status=400)
+    try:
+        genai.configure(api_key=GEMINI_API_KEY)
+        model = genai.GenerativeModel('gemini-1.5-flash-latest')
+        system_prompt = """
+        You are 'DareBot', the official, friendly assistant for the Dareora website. 
+        Your personality is helpful, enthusiastic, and a bit playful. Your main purpose is to answer questions about Dareora based ONLY on the information provided below.
+
+        **Your Knowledge Base:**
+        - **What is Dareora?** It's an exciting web platform for college students to connect through fun challenges and dares. Users can submit their own dares, complete dares from others, and get recognized for their achievements.
+        - **Core Mission:** To build a fun, safe, and competitive community spirit on campus.
+        - **Key Features:**
+            - **Submit & Browse Dares:** Users can create their own challenges or browse dares submitted by the community.
+            - **Community Wall:** A public showcase of successfully completed dares with proof.
+            - **Leaderboards:** A ranking system to see who the most active and daring students are.
+            - **Safety:** All dares are reviewed by moderators to ensure they are safe and appropriate.
+            - **Login:** Users can sign up and log in easily and securely using their Google accounts.
+        
+        **Your Instructions:**
+        - Stick strictly to the information in your knowledge base.
+        - If a user asks a question you cannot answer from your knowledge base (e.g., "What is the capital of France?"), politely state that you can only answer questions about the Dareora website.
+        - Keep your answers concise and easy to understand.
+        - Always maintain your friendly and enthusiastic persona.
+
+        Now, provide a helpful answer to the following user's question.
+        """
+        full_prompt = f"{system_prompt}\n\nUSER'S QUESTION: \"{user_message}\""
+        response = model.generate_content(full_prompt)
+
+        return JsonResponse({'response': response.text})
+
+    except Exception as e:
+        print(f"An error occurred with the Gemini API: {e}")
+        user_error_message = "Oops! I'm having a little trouble connecting right now. Please try again in a moment."
+        return JsonResponse({'response': user_error_message}, status=500)

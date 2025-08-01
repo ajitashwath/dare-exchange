@@ -10,17 +10,40 @@
         gap: 1.5rem;
         margin-top: 2rem;
     }
+
     .feature-card {
         background-color: var(--color-surface-light);
         padding: 2rem;
         border-radius: var(--radius-lg);
         text-align: center;
+        opacity: 0; /* Start hidden for animation */
+        transform: translateY(20px);
+        /* The animation now uses a CSS variable '--animation-order' for the delay.
+          We'll set this variable in the HTML loop below.
+        */
+        animation: fadeInUp 0.5s ease-out forwards;
+        animation-delay: calc(var(--animation-order) * 100ms); /* Staggered delay */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-glow);
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
     .feature-card i {
         font-size: 3rem;
         color: var(--color-brand);
         margin-bottom: 1rem;
     }
+
     .feature-card h3 {
         font-size: 1.5rem;
         margin-bottom: 0.5rem;
@@ -63,5 +86,13 @@
         <h3>Easy Social Login</h3>
         <p>Get started in seconds with our simple and secure Google sign-in option.</p>
     </div>
+    {% for feature in features %}
+    <div class="feature-card" style="--animation-order: {{ forloop.counter }};">
+        <i class="{{ feature.icon_class }}"></i>
+        <h3>{{ feature.title }}</h3>
+        <p>{{ feature.description }}</p>
+    </div>
+    {% endfor %}
 </div>
+
 {% endblock %}

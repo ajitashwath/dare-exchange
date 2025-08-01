@@ -153,7 +153,10 @@ MEDIA_ROOT = BASE_DIR / 'mediafiles'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+SOCIALACCOUNT_ADAPTER = 'dares.adapters.CustomSocialAccountAdapter'
+
 SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_LOGIN_ON_GET = True 
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_USERNAME_REQUIRED = False
