@@ -4,52 +4,63 @@
 
 {% block content %}
 <style>
-    .community-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    .community-feed {
+        display: flex;
+        flex-direction: column;
         gap: 1.5rem;
+        max-width: 800px;
+        margin: 0 auto;
     }
-    .completion-card {
+    .completion-post {
         background-color: var(--color-surface);
         border: 1px solid var(--color-border);
         border-radius: var(--radius-lg);
         overflow: hidden;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .completion-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    .post-header {
+        display: flex;
+        align-items: center;
+        padding: 1rem 1.5rem;
     }
-    .completion-card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-bottom: 1px solid var(--color-border);
+    .post-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 1rem;
     }
-    .completion-card-content {
-        padding: 1.5rem;
+    .post-author {
+        font-weight: 600;
     }
-    .completion-card-content h3 {
-        font-size: 1.25rem;
-        margin-bottom: 0.5rem;
-    }
-    .completion-card-content h3 a {
-        color: var(--color-text-primary);
-        text-decoration: none;
-    }
-     .completion-card-content h3 a:hover {
-        color: var(--color-brand);
-    }
-    .completion-card-content .proof {
-        font-style: italic;
-        color: var(--color-text-secondary);
-        border-left: 3px solid var(--color-brand);
-        padding-left: 1rem;
-        margin: 1rem 0;
-    }
-    .completer-info {
+    .post-date {
         font-size: 0.9rem;
         color: var(--color-text-muted);
+    }
+    .post-body {
+        padding: 0 1.5rem 1.5rem;
+    }
+    .post-image {
+        width: 100%;
+        max-height: 500px;
+        object-fit: cover;
+        border-bottom: 1px solid var(--color-border);
+        border-top: 1px solid var(--color-border);
+    }
+    .post-actions {
+        display: flex;
+        justify-content: space-around;
+        padding: 0.5rem;
+        border-top: 1px solid var(--color-border);
+    }
+    .post-actions button {
+        background: none;
+        border: none;
+        color: var(--color-text-muted);
+        cursor: pointer;
+        padding: 0.5rem;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 </style>
 
@@ -58,26 +69,33 @@
     <p>Check out the latest dares completed by the Dareora community!</p>
 </div>
 
-<div class="community-grid">
+<div class="community-feed">
     {% for completion in completions %}
-    <div class="completion-card">
-        {% if completion.completion_image %}
-            <img src="{{ completion.completion_image }}" alt="Proof for {{ completion.dare.title }}">
-        {% else %}
-            <img src="https://source.unsplash.com/random/400x200?abstract&sig={{ completion.id }}" alt="Abstract image for dare completion">
-        {% endif %}
-        <div class="completion-card-content">
-            <h3><a href="{{ completion.dare.get_absolute_url }}">{{ completion.dare.title }}</a></h3>
-            <p class="completer-info">
-                Completed by <strong>{{ completion.completer_name }}</strong> on {{ completion.completed_at|date:"F d, Y" }}
-            </p>
-            <p class="proof">"{{ completion.completion_proof|truncatewords:20 }}"</p>
+    <div class="completion-post">
+        <div class="post-header">
+            <img src="https://source.unsplash.com/random/100x100?portrait&sig={{ completion.id }}" alt="User Avatar" class="post-avatar">
+            <div>
+                <div class="post-author">{{ completion.completer_name }}</div>
+                <div class="post-date">{{ completion.completed_at|date:"F d, Y" }}</div>
+            </div>
+        </div>
+        
+        <img src="https://source.unsplash.com/random/800x600?abstract&sig={{ completion.id }}" alt="Dare Completion" class="post-image">
+
+        <div class="post-body">
+            <p>"{{ completion.completion_proof }}"</p>
+        </div>
+        
+        <div class="post-actions">
+            <button><i class="ph-heart"></i> Like</button>
+            <button><i class="ph-chat-circle-text"></i> Comment</button>
+            <button><i class="ph-share-network"></i> Share</button>
         </div>
     </div>
     {% empty %}
-    <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 4rem;">
+    <div class="card" style="text-align: center; padding: 4rem;">
         <h3>The Wall is Empty</h3>
-        <p>No dares have been completed and verified yet. Be the first to get on the wall!</p>
+        <p>No dares have been completed and verified yet. Be the first!</p>
         <a href="{% url 'dares:dare_list' %}" class="btn btn-primary" style="margin-top: 1rem;">Browse Dares</a>
     </div>
     {% endfor %}

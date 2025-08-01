@@ -379,19 +379,16 @@
     </style>
 </head>
 <body>
-
     <nav class="navbar">
         <div class="navbar-container">
             <a href="{% url 'dares:home' %}" class="navbar-brand">Dareora</a>
             
             <ul class="navbar-nav">
                 <li><a href="{% url 'dares:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
-                <li><a href="{% url 'dares:dare_list' %}" class="{% if request.resolver_match.url_name == 'dare_list' %}active{% endif %}">Dare App</a></li>
-                <li><a href="{% url 'dares:dare_list' %}" class="{% if request.resolver_match.url_name == 'challenges' %}active{% endif %}">Challenges</a></li>
+                <li><a href="{% url 'dares:dare_list' %}" class="{% if request.resolver_match.url_name == 'dare_list' %}active{% endif %}">Dares</a></li>
                 <li><a href="{% url 'dares:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">Features</a></li>
                 <li><a href="{% url 'dares:community' %}" class="{% if request.resolver_match.url_name == 'community' %}active{% endif %}">Community</a></li>
                 <li><a href="{% url 'dares:faq' %}" class="{% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a></li>
-                <li><a href="{% url 'dares:stats' %}" class="{% if request.resolver_match.url_name == 'stats' %}active{% endif %}">Network</a></li>
             </ul>
 
             <div class="navbar-actions">
@@ -425,14 +422,174 @@
                 <a href="#"><i class="ph-regular ph-tiktok-logo"></i></a>
                 <a href="#"><i class="ph-regular ph-youtube-logo"></i></a>
                 <a href="#"><i class="ph-regular ph-discord-logo"></i></a>
-                <a href="#"><i class="ph-regular ph-twitch-logo"></i></a>
-                <a href="#"><i class="ph-regular ph-reddit-logo"></i></a>
                 <a href="#"><i class="ph-regular ph-twitter-logo"></i></a>
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <a href="{% url 'dares:about' %}" style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">Features</a>
+                <a href="{% url 'dares:community' %}" style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">Community</a>
+                <a href="{% url 'dares:faq' %}" style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">FAQ</a>
+                <a href="{% url 'dares:privacy' %}" style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">Privacy</a>
+                <a href="{% url 'dares:terms' %}" style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">Terms</a>
             </div>
             <p>&copy; {% now "Y" %} Dareora. All Rights Reserved.</p>
         </div>
     </footer>
-
     {% block scripts %}{% endblock %}
+
+    <div id="chatbot-container">
+        <div id="chatbot-button">
+            <i class="ph-chats-fill"></i>
+        </div>
+        <div id="chatbot-window">
+            <div id="chatbot-header">
+                <h3>Dareora</h3>
+                <button id="chatbot-close">&times;</button>
+            </div>
+            <div id="chatbot-messages"></div>
+            <div id="chatbot-input-container">
+                <input type="text" id="chatbot-input" placeholder="Ask a question...">
+                <button id="chatbot-send">Send</button>
+            </div>
+        </div>
+    </div>
+    <style>
+        #chatbot-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1001;
+        }
+        #chatbot-button {
+            width: 60px;
+            height: 60px;
+            background-color: var(--color-brand);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        #chatbot-button:hover {
+            transform: scale(1.1);
+        }
+        #chatbot-button i {
+            font-size: 2rem;
+            color: white;
+        }
+        #chatbot-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        #chatbot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        #chatbot-messages {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        #chatbot-input-container {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid var(--color-border);
+        }
+        #chatbot-input {
+            flex-grow: 1;
+            border: 1px solid var(--color-border);
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            padding: 0.5rem;
+            border-radius: var(--radius-md);
+        }
+        #chatbot-send {
+            margin-left: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            background-color: var(--color-brand);
+            color: white;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatbotButton = document.getElementById('chatbot-button');
+            const chatbotWindow = document.getElementById('chatbot-window');
+            const chatbotClose = document.getElementById('chatbot-close');
+            const chatbotSend = document.getElementById('chatbot-send');
+            const chatbotInput = document.getElementById('chatbot-input');
+            const chatbotMessages = document.getElementById('chatbot-messages');
+
+            chatbotButton.addEventListener('click', () => {
+                chatbotWindow.style.display = 'flex';
+            });
+
+            chatbotClose.addEventListener('click', () => {
+                chatbotWindow.style.display = 'none';
+            });
+
+            chatbotSend.addEventListener('click', sendMessage);
+            chatbotInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            function sendMessage() {
+                const message = chatbotInput.value;
+                if (message.trim() === '') return;
+
+                appendMessage(message, 'user');
+                chatbotInput.value = '';
+
+                fetch('/chatbot-response/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({ message: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    appendMessage(data.response, 'bot');
+                });
+            }
+
+            function appendMessage(text, sender) {
+                const messageElement = document.createElement('div');
+                messageElement.textContent = text;
+                messageElement.style.padding = '0.5rem';
+                messageElement.style.borderRadius = 'var(--radius-md)';
+                messageElement.style.marginBottom = '0.5rem';
+                if (sender === 'user') {
+                    messageElement.style.backgroundColor = 'var(--color-brand)';
+                    messageElement.style.color = 'white';
+                    messageElement.style.alignSelf = 'flex-end';
+                } else {
+                    messageElement.style.backgroundColor = 'var(--color-surface-light)';
+                    messageElement.style.color = 'var(--color-text-primary)';
+                    messageElement.style.alignSelf = 'flex-start';
+                }
+                chatbotMessages.appendChild(messageElement);
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }
+        });
+    </script>
 </body>
 </html>

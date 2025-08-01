@@ -21,7 +21,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views import generic
 import json
 import datetime
+import google.generativeai as genai
 from collections import defaultdict
+import os
 
 from .models import Dare, Category, DifficultyLevel, DareCompletion, DareLike, SiteConfiguration
 from .forms import DareForm, DareSearchForm, DareCompletionForm, ContactForm, NewsletterForm
@@ -541,3 +543,19 @@ class TermsView(TemplateView):
 
 class FAQView(TemplateView):
     template_name = 'faq.html'
+
+def chatbot_response(request):
+    if request.method == 'POST':
+        GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+        genai.configure(api_key=GEMINI_API_KEY)
+        model = genai.GenerativeModel('gemini-pro')
+        data = json.loads(request.body)
+        user_message = data.get('message', '')
+
+        try:
+            response = model.generate_content(user_message)
+            return JsonResponse({'response': response.text})
+        except Exception as e:
+            return JsonResponse({'response': f'An error occurred: {e}'})
+            
+    return JsonResponse({'response': 'Invalid request'}, status=400)

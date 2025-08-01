@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load socialaccount %} {# Add this line #}
+{% load socialaccount %}
 
 {% block title %}Login - Dareora{% endblock %}
 
@@ -8,45 +8,35 @@
     <div class="auth-card">
         <div class="auth-header">
             <h2>Welcome Back!</h2>
-            <p>Login to continue your daring adventures.</p>
+            <p>Continue with Google to access your account.</p>
         </div>
 
-        {% if form.non_field_errors %}
-            <div style="color: #F87171; background-color: rgba(239, 68, 68, 0.1); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; text-align: center;">
-                {{ form.non_field_errors.0 }}
-            </div>
-        {% endif %}
-
-        <form method="post" novalidate>
-            {% csrf_token %}
-
-            <div class="form-group">
-                <label for="{{ form.username.id_for_label }}">Username or Email</label> {# Changed label #}
-                {{ form.username }}
-            </div>
-
-            <div class="form-group">
-                <label for="{{ form.password.id_for_label }}">Password</label>
-                {{ form.password }}
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Login</button>
-            </div>
-        </form> {# Moved form closing tag #}
-
-        <div class="social-login-divider"><span>OR</span></div>
-        
-        {# Updated Google button #}
         <a href="{% provider_login_url 'google' %}" class="btn btn-social-login">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.19,4.73C14.03,4.73 15.1,5.5 15.7,6.14L17.87,4.12C16.14,2.56 14.18,1.57 12.19,1.57C7.03,1.57 3,6.15 3,12C3,17.85 7.03,22.43 12.19,22.43C17.6,22.43 21.54,18.51 21.54,12.31C21.54,11.77 21.45,11.43 21.35,11.1Z"/></svg>
             <span>Continue with Google</span>
         </a>
 
+        <div class="social-login-divider"><span>OR</span></div>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% for error in field.errors %}
+                <div style="color: var(--color-danger); font-size: 0.9rem; margin-top: 0.5rem;">{{ error }}</div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Login with Email</button>
+            </div>
+        </form>
+
         <p class="form-footer-text">
             Don't have an account? <a href="{% url 'signup' %}">Sign Up</a>
         </p>
-
     </div>
 </div>
 {% endblock %}

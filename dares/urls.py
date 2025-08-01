@@ -17,7 +17,7 @@ from .views import (
     APIStatsView,
     SearchSuggestionsView,
     CommunityView,
-    ContactView
+    chatbot_response
 )
 
 app_name = 'dares'
@@ -27,7 +27,8 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('dares/', DareListView.as_view(), name='dare_list'),
     path('community/', CommunityView.as_view(), name='community'),
-    path('about/', AboutView.as_view(), name='about'),
+    # This URL is for the 'Features' page, which uses the AboutView
+    path('features/', AboutView.as_view(), name='about'),
     path('contact/', ContactView.as_view(), name='contact'),
     path('stats/', StatsView.as_view(), name='stats'),
     
@@ -49,8 +50,11 @@ urlpatterns = [
     # API endpoints
     path('api/stats/', APIStatsView.as_view(), name='api_stats'),
     
-    # Static pages
+    # Static pages (These are fine here if they are part of the 'dares' app context)
     path('privacy/', TemplateView.as_view(template_name='privacy.html'), name='privacy'),
     path('terms/', TemplateView.as_view(template_name='terms.html'), name='terms'),
     path('faq/', TemplateView.as_view(template_name='faq.html'), name='faq'),
+
+    # Backend endpoint for the chatbot
+    path('chatbot-response/', chatbot_response, name='chatbot_response'),
 ]
