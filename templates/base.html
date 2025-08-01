@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Dareora - Unlock Your Dare Spark{% endblock %}</title>
-    
-    <meta name="description" content="{% block description %}Dive into the art of daring, where innovative social technology meets thrilling experiences{% endblock %}">
-    
+
+    <meta name="description"
+        content="{% block description %}Dive into the art of daring, where innovative social technology meets thrilling experiences{% endblock %}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
+
     <style>
         :root {
             --color-background: #0A0E1A;
             --color-surface: #111827;
             --color-surface-light: #1F2937;
             --color-border: #2c3242;
-            
+
             --color-text-primary: #F9FAFB;
             --color-text-secondary: #D1D5DB;
             --color-text-muted: #9CA3AF;
-            
-            --color-brand: #4F46E5; /* Indigo color for highlight */
+
+            --color-brand: #4F46E5;
+            /* Indigo color for highlight */
             --color-brand-light: rgba(79, 70, 229, 0.1);
-            --color-accent: #3B82F6; /* Blue for icons */
+            --color-accent: #3B82F6;
+            /* Blue for icons */
             --color-danger: #F87171;
             --color-success: #34D399;
 
@@ -40,12 +45,20 @@
             --radius-md: 0.5rem;
             --radius-lg: 0.75rem;
             --radius-full: 9999px;
-            
+
             --shadow-glow: 0 0 25px rgba(79, 70, 229, 0.3);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--color-background);
@@ -58,7 +71,9 @@
         /* --- Navigation Bar --- */
         .navbar {
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
             background: rgba(10, 14, 26, 0.6);
             backdrop-filter: blur(12px);
@@ -90,7 +105,7 @@
             gap: var(--space-md);
             list-style: none;
         }
-        
+
         .navbar-nav a {
             color: var(--color-text-secondary);
             text-decoration: none;
@@ -100,11 +115,12 @@
             transition: all 0.2s ease;
         }
 
-        .navbar-nav a:hover, .navbar-nav a.active {
+        .navbar-nav a:hover,
+        .navbar-nav a.active {
             color: var(--color-text-primary);
             background-color: var(--color-surface-light);
         }
-        
+
         .navbar-actions {
             display: flex;
             align-items: center;
@@ -128,7 +144,8 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: calc(var(--space-2xl) + 80px) var(--space-lg) var(--space-2xl); /* Added navbar height to top padding */
+            padding: calc(var(--space-2xl) + 80px) var(--space-lg) var(--space-2xl);
+            /* Added navbar height to top padding */
         }
 
         .page-header {
@@ -137,21 +154,26 @@
             padding-bottom: var(--space-lg);
             border-bottom: 1px solid var(--color-border);
         }
-        .page-header h2 { font-size: 2.5rem; font-weight: 800; }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+
         .page-header p {
             font-size: 1.125rem;
             color: var(--color-text-secondary);
             max-width: 600px;
             margin: var(--space-sm) auto 0;
         }
-        
+
         .card {
             background: var(--color-surface);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-lg);
             padding: var(--space-xl);
         }
-        
+
         /* --- Buttons --- */
         .btn {
             display: inline-flex;
@@ -172,6 +194,7 @@
             background-color: var(--color-brand);
             color: var(--color-text-primary);
         }
+
         .btn-primary:hover {
             background-color: #4338CA;
             transform: translateY(-2px);
@@ -182,6 +205,7 @@
             color: var(--color-text-primary);
             border: 1px solid var(--color-border);
         }
+
         .btn-secondary:hover {
             border-color: var(--color-text-secondary);
         }
@@ -190,15 +214,17 @@
             background-color: var(--color-danger);
             color: var(--color-text-primary);
         }
+
         .btn-danger:hover {
-             background-color: #ef4444;
+            background-color: #ef4444;
         }
-        
+
         .btn-outline {
             background-color: transparent;
             color: var(--color-text-primary);
             border: 1px solid var(--color-border);
         }
+
         .btn-outline:hover {
             background-color: var(--color-surface-light);
             border-color: var(--color-text-secondary);
@@ -212,6 +238,7 @@
             justify-content: center;
             min-height: calc(90vh - 80px);
         }
+
         .auth-card {
             width: 100%;
             max-width: 420px;
@@ -220,17 +247,33 @@
             border-radius: var(--radius-lg);
             padding: var(--space-2xl);
         }
-        .auth-header { text-align: center; margin-bottom: var(--space-xl); }
-        .auth-header h2 { font-size: 1.75rem; font-weight: 700; }
-        .auth-header p { color: var(--color-text-muted); margin-top: var(--space-sm); }
-        
-        .form-group { margin-bottom: var(--space-lg); }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .auth-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .auth-header p {
+            color: var(--color-text-muted);
+            margin-top: var(--space-sm);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+
         .form-group label {
             display: block;
             margin-bottom: var(--space-sm);
             font-weight: 500;
             color: var(--color-text-secondary);
         }
+
         .form-control {
             width: 100%;
             padding: 0.8rem 1rem;
@@ -241,29 +284,38 @@
             font-size: 1rem;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
+
         .form-control:focus {
             outline: none;
             border-color: var(--color-brand);
             box-shadow: 0 0 0 3px var(--color-brand-light);
         }
+
         .form-actions {
             margin-top: var(--space-xl);
             display: flex;
             gap: var(--space-md);
         }
-        .form-actions button { width: 100%; }
+
+        .form-actions button {
+            width: 100%;
+        }
 
         .form-footer-text {
             text-align: center;
             margin-top: var(--space-lg);
             color: var(--color-text-muted);
         }
+
         .form-footer-text a {
             color: var(--color-accent);
             text-decoration: none;
             font-weight: 500;
         }
-        .form-footer-text a:hover { text-decoration: underline; }
+
+        .form-footer-text a:hover {
+            text-decoration: underline;
+        }
 
         .social-login-divider {
             display: flex;
@@ -273,13 +325,21 @@
             margin: var(--space-lg) 0;
             font-size: 0.8rem;
         }
-        .social-login-divider::before, .social-login-divider::after {
+
+        .social-login-divider::before,
+        .social-login-divider::after {
             content: '';
             flex: 1;
             border-bottom: 1px solid var(--color-border);
         }
-        .social-login-divider:not(:empty)::before { margin-right: .5em; }
-        .social-login-divider:not(:empty)::after { margin-left: .5em; }
+
+        .social-login-divider:not(:empty)::before {
+            margin-right: .5em;
+        }
+
+        .social-login-divider:not(:empty)::after {
+            margin-left: .5em;
+        }
 
         .btn-social-login {
             display: flex;
@@ -288,9 +348,11 @@
             border: 1px solid var(--color-border);
             color: var(--color-text-primary);
         }
+
         .btn-social-login:hover {
-             background-color: var(--color-background);
+            background-color: var(--color-background);
         }
+
         .btn-social-login svg {
             width: 20px;
             height: 20px;
@@ -298,7 +360,8 @@
 
         .messages-container {
             position: fixed;
-            top: 100px; /* Below the navbar */
+            top: 100px;
+            /* Below the navbar */
             right: var(--space-lg);
             z-index: 2000;
             display: flex;
@@ -306,6 +369,7 @@
             gap: var(--space-md);
             max-width: 350px;
         }
+
         .alert {
             padding: var(--space-md) var(--space-lg);
             border-radius: var(--radius-md);
@@ -314,23 +378,40 @@
             align-items: center;
             justify-content: space-between;
             gap: var(--space-md);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             animation: fadeInRight 0.5s ease;
         }
+
         @keyframes fadeInRight {
             from {
                 opacity: 0;
                 transform: translateX(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
             }
         }
-        .alert-success { background-color: var(--color-success); }
-        .alert-info { background-color: var(--color-accent); }
-        .alert-warning { background-color: #F59E0B; }
-        .alert-error, .alert-danger { background-color: var(--color-danger); } /* Django uses danger tag for errors */
+
+        .alert-success {
+            background-color: var(--color-success);
+        }
+
+        .alert-info {
+            background-color: var(--color-accent);
+        }
+
+        .alert-warning {
+            background-color: #F59E0B;
+        }
+
+        .alert-error,
+        .alert-danger {
+            background-color: var(--color-danger);
+        }
+
+        /* Django uses danger tag for errors */
 
         .close-alert {
             background: none;
@@ -342,7 +423,10 @@
             opacity: 0.7;
             padding: 0 0 0 1rem;
         }
-        .close-alert:hover { opacity: 1; }
+
+        .close-alert:hover {
+            opacity: 1;
+        }
 
         /* --- Footer --- */
         .footer {
@@ -350,6 +434,7 @@
             margin-top: var(--space-2xl);
             border-top: 1px solid var(--color-border);
         }
+
         .footer-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -357,65 +442,147 @@
             text-align: center;
             color: var(--color-text-muted);
         }
+
         .social-links {
             display: flex;
             justify-content: center;
             gap: var(--space-lg);
             margin-bottom: var(--space-lg);
         }
+
         .social-links a {
             color: var(--color-text-muted);
             font-size: 1.5rem;
             transition: color 0.2s ease;
         }
+
         .social-links a:hover {
             color: var(--color-text-primary);
         }
 
+        .profile-dropdown {
+            position: relative;
+        }
+
+        .profile-dropdown .user-profile-icon {
+            cursor: pointer;
+            border: none;
+            /* If it's a button */
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            width: 220px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+        }
+
+        .profile-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .dropdown-menu a,
+        .dropdown-menu button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown-menu a:hover,
+        .dropdown-menu button:hover {
+            background-color: var(--color-surface-light);
+            color: var(--color-text-primary);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: var(--color-border);
+            margin: 0.5rem 0;
+        }
+
         /* --- Responsive --- */
         @media (max-width: 992px) {
-            .navbar-nav { display: none; }
+            .navbar-nav {
+                display: none;
+            }
+
             /* Add hamburger menu logic here if needed */
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar">
         <div class="navbar-container">
             <a href="{% url 'dares:home' %}" class="navbar-brand">Dareora</a>
-            
+
             <ul class="navbar-nav">
-                <li><a href="{% url 'dares:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
-                <li><a href="{% url 'dares:dare_list' %}" class="{% if request.resolver_match.url_name == 'dare_list' %}active{% endif %}">Dares</a></li>
-                <li><a href="{% url 'dares:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">Features</a></li>
-                <li><a href="{% url 'dares:community' %}" class="{% if request.resolver_match.url_name == 'community' %}active{% endif %}">Community</a></li>
-                <li><a href="{% url 'dares:faq' %}" class="{% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a></li>
+                <li><a href="{% url 'dares:home' %}"
+                        class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+                <li><a href="{% url 'dares:dare_list' %}"
+                        class="{% if request.resolver_match.url_name == 'dare_list' %}active{% endif %}">Dares</a></li>
+                <li><a href="{% url 'dares:about' %}"
+                        class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">Features</a></li>
+                <li><a href="{% url 'dares:community' %}"
+                        class="{% if request.resolver_match.url_name == 'community' %}active{% endif %}">Community</a>
+                </li>
+                <li><a href="{% url 'dares:faq' %}"
+                        class="{% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a></li>
             </ul>
 
             <div class="navbar-actions">
                 {% if user.is_authenticated %}
-                    <a href="#" class="user-profile-icon" title="Logged in as {{ user.username }}">{{ user.username|first|upper }}</a>
-                    
-                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-secondary">Logout</button>
-                    </form>
-                    
+                <div class="profile-dropdown">
+                    <button class="user-profile-icon">{{ user.username|first|upper }}</button>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-header">
+                            Signed in as<br><strong>{{ user.username }}</strong>
+                        </div>
+                        <a href="#">Your Profile</a>
+                        <a href="#">Account Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </form>
+                    </div>
+                </div>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-outline">Login</a>
-                    <a href="{% url 'signup' %}" class="btn btn-primary">Create Account</a>
+                <a href="{% url 'login' %}" class="btn btn-outline">Login</a>
+                <a href="{% url 'signup' %}" class="btn btn-primary">Create Account</a>
                 {% endif %}
             </div>
         </div>
     </nav>
-    
+
     {% block main %}
     <main class="container">
         {% block content %}
         {% endblock %}
     </main>
     {% endblock main %}
-    
+
     <footer class="footer">
         <div class="footer-container">
             <div class="social-links">
@@ -426,11 +593,16 @@
                 <a href="#"><i class="ph ph-twitter-logo"></i></a>
             </div>
             <div style="margin-bottom: 1rem;">
-                <a href="{% url 'dares:about' %}" style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">Features</a>
-                <a href="{% url 'dares:community' %}" style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">Community</a>
-                <a href="{% url 'dares:faq' %}" style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">FAQ</a>
-                <a href="{% url 'dares:privacy' %}" style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">Privacy</a>
-                <a href="{% url 'dares:terms' %}" style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">Terms</a>
+                <a href="{% url 'dares:about' %}"
+                    style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">Features</a>
+                <a href="{% url 'dares:community' %}"
+                    style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">Community</a>
+                <a href="{% url 'dares:faq' %}"
+                    style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">FAQ</a>
+                <a href="{% url 'dares:privacy' %}"
+                    style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">Privacy</a>
+                <a href="{% url 'dares:terms' %}"
+                    style="margin: 0 1rem; color: var(--color-text-muted); text-decoration: none;">Terms</a>
             </div>
             <p>&copy; {% now "Y" %} Dareora. All Rights Reserved.</p>
         </div>
@@ -446,7 +618,13 @@
                 <h3>Dareora</h3>
                 <button id="chatbot-close">&times;</button>
             </div>
-            <div id="chatbot-messages"></div>
+            <div id="chatbot-messages">
+            </div>
+            <div id="chatbot-starter-questions">
+                <button class="starter-btn">What is Dareora?</button>
+                <button class="starter-btn">How do I submit a dare?</button>
+                <button class="starter-btn">Is it safe?</button>
+            </div>
             <div id="chatbot-input-container">
                 <input type="text" id="chatbot-input" placeholder="Ask a question...">
                 <button id="chatbot-send">Send</button>
@@ -460,6 +638,7 @@
             right: 2rem;
             z-index: 1001;
         }
+
         #chatbot-button {
             width: 60px;
             height: 60px;
@@ -469,16 +648,19 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s;
         }
+
         #chatbot-button:hover {
             transform: scale(1.1);
         }
+
         #chatbot-button i {
             font-size: 2rem;
             color: white;
         }
+
         #chatbot-window {
             position: absolute;
             bottom: 80px;
@@ -490,8 +672,9 @@
             border-radius: var(--radius-lg);
             display: none;
             flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
+
         #chatbot-header {
             display: flex;
             justify-content: space-between;
@@ -499,16 +682,19 @@
             padding: 1rem;
             border-bottom: 1px solid var(--color-border);
         }
+
         #chatbot-messages {
             flex-grow: 1;
             padding: 1rem;
             overflow-y: auto;
         }
+
         #chatbot-input-container {
             display: flex;
             padding: 1rem;
             border-top: 1px solid var(--color-border);
         }
+
         #chatbot-input {
             flex-grow: 1;
             border: 1px solid var(--color-border);
@@ -517,6 +703,7 @@
             padding: 0.5rem;
             border-radius: var(--radius-md);
         }
+
         #chatbot-send {
             margin-left: 0.5rem;
             padding: 0.5rem 1rem;
@@ -525,6 +712,57 @@
             color: white;
             border-radius: var(--radius-md);
             cursor: pointer;
+        }
+
+        #chatbot-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .message {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-lg);
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        .user-message {
+            background-color: var(--color-brand);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: var(--radius-xs);
+        }
+
+        .bot-message {
+            background-color: var(--color-surface-light);
+            color: var(--color-text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: var(--radius-xs);
+        }
+
+        .typing-indicator {
+            align-self: flex-start;
+            color: var(--color-text-muted);
+            font-style: italic;
+        }
+
+        #chatbot-starter-questions {
+            padding: 0.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .starter-btn {
+            background-color: var(--color-surface-light);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+            padding: 0.5rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            text-align: left;
         }
     </style>
     <script>
@@ -551,12 +789,19 @@
                 }
             });
 
+            function showWelcomeMessage() {
+                const welcomeText = "Hi there! I'm DareBot. Ask me anything about Dareora, or try one of the suggestions below.";
+                appendMessage(welcomeText, 'bot');
+            }
+
             function sendMessage() {
                 const message = chatbotInput.value;
                 if (message.trim() === '') return;
 
                 appendMessage(message, 'user');
                 chatbotInput.value = '';
+                document.getElementById('chatbot-starter-questions').style.display = 'none'; // Hide starters
+                showTypingIndicator(true);
 
                 fetch('/chatbot-response/', {
                     method: 'POST',
@@ -566,31 +811,42 @@
                     },
                     body: JSON.stringify({ message: message })
                 })
-                .then(response => response.json())
-                .then(data => {
-                    appendMessage(data.response, 'bot');
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        showTypingIndicator(false);
+                        appendMessage(data.response, 'bot');
+                    });
             }
 
             function appendMessage(text, sender) {
                 const messageElement = document.createElement('div');
                 messageElement.textContent = text;
-                messageElement.style.padding = '0.5rem';
-                messageElement.style.borderRadius = 'var(--radius-md)';
-                messageElement.style.marginBottom = '0.5rem';
-                if (sender === 'user') {
-                    messageElement.style.backgroundColor = 'var(--color-brand)';
-                    messageElement.style.color = 'white';
-                    messageElement.style.alignSelf = 'flex-end';
-                } else {
-                    messageElement.style.backgroundColor = 'var(--color-surface-light)';
-                    messageElement.style.color = 'var(--color-text-primary)';
-                    messageElement.style.alignSelf = 'flex-start';
-                }
+                messageElement.classList.add('message', sender + '-message');
                 chatbotMessages.appendChild(messageElement);
                 chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
             }
+
+            function showTypingIndicator(show) {
+                let indicator = chatbotMessages.querySelector('.typing-indicator');
+                if (show && !indicator) {
+                    indicator = document.createElement('div');
+                    indicator.textContent = 'DareBot is typing...';
+                    indicator.classList.add('message', 'typing-indicator');
+                    chatbotMessages.appendChild(indicator);
+                    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                } else if (!show && indicator) {
+                    indicator.remove();
+                }
+            }
+            document.querySelectorAll('.starter-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    chatbotInput.value = button.textContent;
+                    sendMessage();
+                });
+            });
+            showWelcomeMessage();
         });
     </script>
 </body>
+
 </html>

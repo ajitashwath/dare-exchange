@@ -312,12 +312,30 @@ class CustomLoginForm(AuthenticationForm):
         )
 
 class CustomUserCreationForm(UserCreationForm):
-    """
-    Custom sign-up form to apply CSS classes to widgets.
-    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for fieldname in self.fields:
-            self.fields[fieldname].widget.attrs.update({
-                'class': 'form-control'
-            })
+        self.fields['username'].widget.attrs.update({
+            'class': 'form-control', 
+            'placeholder': 'Enter your username'
+        })
+        self.fields['password'].widget.attrs.update({
+            'class': 'form-control', 
+            'placeholder': 'Enter your password'
+        })
+        self.fields['password2'].widget.attrs.update({
+            'class': 'form-control', 
+            'placeholder': 'Confirm your password'
+        })
+
+class CustomAuthenticationForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.fields['username'].widget.attrs.update({
+            'class': 'form-control', 
+            'placeholder': 'Enter your username'
+        })
+        self.fields['password'].widget.attrs.update({
+            'class': 'form-control', 
+            'placeholder': 'Enter your password'
+        })

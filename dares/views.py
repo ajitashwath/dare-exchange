@@ -21,6 +21,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views import generic
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.forms import UserCreationForm
 import json
 import datetime
 import google.generativeai as genai
@@ -28,7 +29,7 @@ from collections import defaultdict
 import os
 
 from .models import Dare, Category, DifficultyLevel, DareCompletion, DareLike, SiteConfiguration
-from .forms import DareForm, DareSearchForm, DareCompletionForm, ContactForm, NewsletterForm
+from .forms import DareForm, DareSearchForm, DareCompletionForm, ContactForm, NewsletterForm, CustomUserCreationForm
 
 class HomeView(TemplateView):
     template_name = 'home.html'
@@ -533,7 +534,7 @@ class CommunityView(ListView):
         ).order_by('-completed_at')
 
 class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
+    form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'signup.html'
     
